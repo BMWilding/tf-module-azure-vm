@@ -1,16 +1,17 @@
-vm_prefix             = "HECTIC"
-app_name              = "My Hectic Application"
-vm_count              = 3
-environment           = "prod"
-tags                  = {}
+app_name             = "TEST_APP"
+site                 = "sydney"
+environment          = "odev"
+cost_centre          = "123456"
+app_id               = "A00001"
 
-# Image Setup
-vm_size               = "Standard_A1"
-image_option          = "ubuntu-base"
-custom_data           = ""
+storage_type         = "Standard_GRS"
+
+vm_count             = 2
+vm_size              = "Standard_A1" 
 
 # Network Configuration
-subnet_name           = "app"
-create_public_ip      = true
-lb_pool_ids           = []
-nsg_id                = ""
+subnet_name          = "private" 
+create_public_ip     = false
+
+consul_address  = "consul.australiaeast.cloudapp.azure.com:8500"
+consul_dc       = "australiaeast"

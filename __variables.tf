@@ -4,11 +4,13 @@
 
 # VM Options
 variable app_name              { type = "string" }
-variable resource_group_name   { type = "string" }
 variable site                  { type = "string", default = "sydney"}
 variable environment           { type = "string" }
 variable cost_centre           { default = "None" }
 variable app_id                { default = "None" }
+
+variable consul_address        {}
+variable consul_dc             {}
 
 variable storage_type          { default = "Standard_GRS" }
 

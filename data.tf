@@ -1,20 +1,25 @@
-#########################################
-# Packer Images - Core Services
-#########################################
-/*
-module "image_templates" {
-  source = "./__SHARED/image_options"
-  image_option = "${var.image_option}"
+###################################
+## Consul
+###################################
+provider "consul" {
+  address    = "${var.consul_address}"
+  datacenter = "${var.consul_dc}"
 }
-*/
 
 data "consul_keys" "keys" {
-  key { name = "subnet" path = "core/${var.site}/network/${var.subnet_name}_subnet" }
-  key { name = "location" path = "core/${var.site}/location" }
-  key { name = "storage_path" path = "core/${var.site}/storage/${var.storage_type}/primary_blob_endpoint" }
-  key { name = "storage_name" path = "core/${var.site}/storage/${var.storage_type}/name" }
-  key { name = "disk_container" path = "core/${var.site}/storage/${var.storage_type}/disk_container"}
-}
+  key { name = "subnet_id" path = "azure/${var.environment}/core/${var.site}/network/${var.subnet_name}_subnet" }
+  key { name = "location" path = "azure/${var.environment}/core/${var.site}/location" }
+} 
+
+
+###################################
+## Resource Group
+###################################
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.app_id}-${var.environment}"
+  location = "${data.consul_keys.keys.var.location}"
+} 
+
 
 #########################################
 # Create Standard Tags
@@ -26,7 +31,6 @@ module "tags" {
   app_id       = "${var.app_id}"
   subnet_name  = "${var.subnet_name}"
   cost_centre  = "${var.cost_centre}"
-
 }
 
 #########################################
