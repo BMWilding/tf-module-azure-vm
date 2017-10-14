@@ -23,8 +23,8 @@ locals {
       map(
         "App ID"      , "${var.app_id}",
         "Subnet Name" , "${var.subnet_name}",
-        "Cost Centre" , "${consul_keys.keys.var.cost_centre}",
-        "App Name"    , "${consul_keys.keys.var.app_name}"
+        "Cost Centre" , "${data.consul_keys.keys.var.cost_centre}",
+        "App Name"    , "${data.consul_keys.keys.var.app_name}"
       )
     )
   }"
