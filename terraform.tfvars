@@ -1,4 +1,5 @@
-app_name             = "TEST_APP"
+resource_group_name             = "core-odev-syd-TEST01"
+role = "myvmrole"
 site                 = "sydney"
 environment          = "odev"
 cost_centre          = "123456"
@@ -15,3 +16,4 @@ create_public_ip     = false
 
 consul_address  = "consul.australiaeast.cloudapp.azure.com:8500"
 consul_dc       = "australiaeast"
+lb_enabled = true

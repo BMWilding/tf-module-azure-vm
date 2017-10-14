@@ -19,7 +19,6 @@ locals {
     merge(
       var.custom_tags, 
       map(
-        "App Name"    , "${var.app_name}",
         "App ID"      , "${var.app_id}",
         "Subnet Name" , "${var.subnet_name}",
         "Cost Centre" , "${var.cost_centre}"

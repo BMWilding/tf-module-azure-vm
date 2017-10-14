@@ -45,6 +45,7 @@ resource "azurerm_public_ip" "vm_pi" {
 # Load Balancer
 #########################################
 resource "azurerm_lb" "test" {
+  count               = "${var.lb_enabled ? 1 : 0 }"
   name                = "${var.app_id}-LoadBalancer"
   location            = "${data.consul_keys.keys.var.location}"
   resource_group_name     = "${var.resource_group_name}"
@@ -54,6 +55,7 @@ resource "azurerm_lb" "test" {
     name                 = "PublicIPAddress"
     public_ip_address_id = "${var.lb_public ? element(concat(list("dummyforelementerror"),azurerm_public_ip.lb_pi.*.id), count.index+1) : ""}"
     private_ip_address_allocation = "${var.lb_public ? "" : "dynamic"}"
+    subnet_id = "${var.lb_public ? "" : data.consul_keys.keys.var.subnet_id }"
   }
 }
 
