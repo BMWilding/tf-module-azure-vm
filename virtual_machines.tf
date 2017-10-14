@@ -56,5 +56,7 @@ resource "azurerm_availability_set" "as" {
   name                = "${lower(element(random_pet.vm_name.*.id, count.index))}-as"
   location            = "${data.consul_keys.keys.var.location}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
+  platform_fault_domain_count = "2"
   tags = "${merge(var.custom_tags, module.tags.standard_tags)}"
+  managed = true
 }

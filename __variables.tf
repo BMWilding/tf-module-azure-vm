@@ -4,6 +4,7 @@
 
 # VM Options
 variable app_name              { type = "string" }
+variable role                  { type = "string" }
 variable site                  { type = "string", default = "sydney"}
 variable environment           { type = "string" }
 variable cost_centre           { default = "None" }
