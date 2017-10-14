@@ -7,7 +7,7 @@ resource "azurerm_virtual_machine" "vm" {
   availability_set_id   = "${azurerm_availability_set.as.id}"
   name                  = "${lower(element(random_pet.vm_name.*.id, count.index))}"
   location                = "${data.consul_keys.keys.var.location}"
-  resource_group_name   = "${azurerm_resource_group.rg.name}"
+  resource_group_name     = "${var.resource_group_name}"
   network_interface_ids = ["${element(azurerm_network_interface.ni.*.id, count.index)}"]
   vm_size               = "${var.vm_size}"
 
@@ -45,7 +45,7 @@ resource "azurerm_virtual_machine" "vm" {
     disable_password_authentication = false
   }
 
-  tags = "${merge(var.custom_tags, module.tags.standard_tags)}"
+  tags = "${local.tags}"
 }
 
 #########################################
@@ -53,10 +53,10 @@ resource "azurerm_virtual_machine" "vm" {
 #########################################
 resource "azurerm_availability_set" "as" {
   count               = "${var.vm_count != 0 ? 1 : 0}"
-  name                = "${lower(element(random_pet.vm_name.*.id, count.index))}-as"
+  name                = "${var.app_id}-as"
   location            = "${data.consul_keys.keys.var.location}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
+  resource_group_name     = "${var.resource_group_name}"
   platform_fault_domain_count = "2"
-  tags = "${merge(var.custom_tags, module.tags.standard_tags)}"
+  tags = "${local.tags}"
   managed = true
 }

@@ -11,26 +11,21 @@ data "consul_keys" "keys" {
   key { name = "location" path = "azure/${var.environment}/core/${var.site}/location" }
 } 
 
-
-###################################
-## Resource Group
-###################################
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.app_id}-${var.environment}"
-  location = "${data.consul_keys.keys.var.location}"
-} 
-
-
-#########################################
-# Create Standard Tags
-#########################################
-module "tags" {
-  source = "./__SHARED/vm_tags"
-
-  app_name     = "${var.app_name}"
-  app_id       = "${var.app_id}"
-  subnet_name  = "${var.subnet_name}"
-  cost_centre  = "${var.cost_centre}"
+##################################
+## Standard Tags
+##################################
+locals {
+  tags = "${
+    merge(
+      var.custom_tags, 
+      map(
+        "App Name"    , "${var.app_name}",
+        "App ID"      , "${var.app_id}",
+        "Subnet Name" , "${var.subnet_name}",
+        "Cost Centre" , "${var.cost_centre}"
+      )
+    )
+  }"
 }
 
 #########################################
@@ -39,3 +34,4 @@ module "tags" {
 resource "random_pet" "vm_name" {
   count = "${var.vm_count}"
 }
+
