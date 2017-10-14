@@ -9,6 +9,8 @@ provider "consul" {
 data "consul_keys" "keys" {
   key { name = "subnet_id" path = "azure/${var.environment}/core/${var.site}/network/${var.subnet_name}_subnet" }
   key { name = "location" path = "azure/${var.environment}/core/${var.site}/location" }
+  key { name = "cost_centre" path = "azure/${var.app_id}/cost_centre" }
+  key { name = "app_name" path = "azure/${var.app_id}/app_name" }
 } 
 
 ##################################
@@ -21,7 +23,8 @@ locals {
       map(
         "App ID"      , "${var.app_id}",
         "Subnet Name" , "${var.subnet_name}",
-        "Cost Centre" , "${var.cost_centre}"
+        "Cost Centre" , "${consul_keys.keys.var.cost_centre}"
+        "App Name" , "${consul_keys.keys.var.app_name}"
       )
     )
   }"

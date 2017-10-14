@@ -28,11 +28,6 @@ variable environment {
     type = "string"
 }
 
-variable cost_centre {
-    description = "What is the cost centre to be used for recharging"
-    type = "string"
-}
-
 variable vm_count {
     description = "How many virtual machines are to be provisioned"
     type = "string" 
