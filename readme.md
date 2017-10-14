@@ -1,3 +1,6 @@
+
+# SCHEMA HAS CHANGED SIGNIFICANTLY. UPDATES COMING ASAP.
+
 # Virtual Machine Module
 This module is used to build a virtual machine
 
