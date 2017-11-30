@@ -53,16 +53,31 @@ variable lb_public {
     default = false
 }
 
+
+variable lb_rules {
+    description = "A list of comma deliniated strings of the Load Balancing Rules, including Health Check endpoints"
+    default = [""]
+}
+
 #########################################
 # OPTIONAL PARAMETERS
 # These Parameters have reasonable defaults
 #########################################
+variable enable_ca_release_automation {
+    default = false
+    description = "This does nothing right now | Enable the CA Release Automation agent and join the server"
+}
+
+variable additional_chef_roles {
+    default = false
+    description = "This does nothing right now | Add additional chef roles to the server's bootstrap script"
+}
+
 variable vm_size  {
     description = "What size should the virtual machines be? Sizes available at https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-sizes/"
     default = "Standard_A1" 
     type = "string"
 }
-
 
 variable storage_type {
     description = "The standard of storage used by VM Managed Disks. Options are Standard_LRS and Premium_LRS"
@@ -87,12 +102,3 @@ variable create_public_ip {
     default = false  
     type = "string"
 }
-
-
-#########################################
-# TEMPORARY PARAMETERS
-# TBA
-#########################################
-variable consul_address        {}
-variable consul_dc             {}
-variable custom_data           { type = "string", default = "" }

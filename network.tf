@@ -72,3 +72,7 @@ resource "azurerm_public_ip" "lb_pi" {
   public_ip_address_allocation = "dynamic"
   tags = "${local.tags}"
 }
+
+
+## TBA Load Balancer Probes
+## TBA Load Balancer Rules
