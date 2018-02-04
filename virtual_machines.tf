@@ -1,4 +1,11 @@
 #########################################
+# Generate Random Pet Name(s)
+#########################################
+resource "random_pet" "vm_name" {
+  count = "${var.vm_count}"
+}
+
+#########################################
 # Azure VM
 #########################################
 
@@ -6,7 +13,7 @@ resource "azurerm_virtual_machine" "vm" {
   count                 = "${var.vm_count}"
   availability_set_id   = "${azurerm_availability_set.as.id}"
   name                  = "${lower(element(random_pet.vm_name.*.id, count.index))}"
-  location                = "${data.consul_keys.keys.var.location}"
+  location                = "${var.location}"
   resource_group_name     = "${var.resource_group_name}"
   network_interface_ids = ["${element(azurerm_network_interface.ni.*.id, count.index)}"]
   vm_size               = "${var.vm_size}"
@@ -26,7 +33,7 @@ resource "azurerm_virtual_machine" "vm" {
     disk_size_gb      = "64"
   }
 
-  # DELETE THIS WHEN MOVED TO PACKER AZURE IMAGE
+  # TODO: DELETE THIS WHEN MOVED TO PACKER AZURE IMAGE
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
@@ -45,7 +52,7 @@ resource "azurerm_virtual_machine" "vm" {
     disable_password_authentication = false
   }
 
-  tags = "${local.tags}"
+  tags = "${var.tags}"
 }
 
 #########################################
@@ -54,9 +61,9 @@ resource "azurerm_virtual_machine" "vm" {
 resource "azurerm_availability_set" "as" {
   count               = "${var.vm_count != 0 ? 1 : 0}"
   name                = "${var.app_id}-as"
-  location            = "${data.consul_keys.keys.var.location}"
+  location            = "${var.location}"
   resource_group_name     = "${var.resource_group_name}"
   platform_fault_domain_count = "2"
-  tags = "${local.tags}"
+  tags = "${var.tags}"
   managed = true
 }

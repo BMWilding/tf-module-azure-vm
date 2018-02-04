@@ -18,13 +18,8 @@ variable "role" {
     type = "string"
 }
 
-variable site {
-    description = "What site will this VM(s) be deployed (e.g. Sydney or Melbourne)"
-    type = "string"
-}
-
-variable environment {
-    description = "Which logical environment will this virtual machine be deployed. Options are Prod, Non-Prod and ODev"
+variable location {
+    description = "Which azure location will these virtual machines be deployed?"
     type = "string"
 }
 
@@ -33,8 +28,12 @@ variable vm_count {
     type = "string" 
 }
 
-# variable image_option          { type = "string" }
+variable subnet_id {
+    description = "The subnet in which this vm deployment will occur"
+    type = "string"
+}
 
+# variable image_option        { type = "string"  }
 variable lb_pool_ids           { default = []     }
 variable nsg_id                { default = ""     }
 
@@ -63,37 +62,27 @@ variable lb_rules {
 # OPTIONAL PARAMETERS
 # These Parameters have reasonable defaults
 #########################################
-variable enable_ca_release_automation {
-    default = false
-    description = "This does nothing right now | Enable the CA Release Automation agent and join the server"
-}
-
-variable additional_chef_roles {
-    default = false
-    description = "This does nothing right now | Add additional chef roles to the server's bootstrap script"
-}
-
 variable vm_size  {
     description = "What size should the virtual machines be? Sizes available at https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-sizes/"
     default = "Standard_A1" 
     type = "string"
 }
 
-variable storage_type {
-    description = "The standard of storage used by VM Managed Disks. Options are Standard_LRS and Premium_LRS"
-    default = "Standard_LRS"
+variable custom_data {
+    description = "Bootstrap script for the virtual machine"
+    default = ""
     type = "string"
 }
 
-variable custom_tags {
+variable tags {
     description = "Any additional tags to be added to the workloads"
     default = {}
     type = "map"
 }
 
-variable subnet_name { 
-    description = "What is the name of the subnet where Virtual Machines will be provisioned. This value, alongside Environment, will pull a Subnet_ID from Consul"
-    default = "private" 
+variable storage_type {
+    description = "The standard of storage used by VM Managed Disks. Options are Standard_LRS and Premium_LRS"
+    default = "Standard_LRS"
     type = "string"
 }
 
