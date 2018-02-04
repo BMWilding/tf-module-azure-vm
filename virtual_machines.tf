@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine" "vm" {
 #########################################
 resource "azurerm_availability_set" "as" {
   count               = "${var.vm_count != 0 ? 1 : 0}"
-  name                = "${var.app_id}-as"
+  name                = "${element(random_pet.vm_name.*.id, 0)}-as"
   location            = "${var.location}"
   resource_group_name     = "${var.resource_group_name}"
   platform_fault_domain_count = "2"

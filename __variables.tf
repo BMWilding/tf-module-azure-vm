@@ -3,20 +3,11 @@
 # You must provide a value for each of these parameters
 #########################################
 
-variable "app_id" { 
-    description = "The Westpac Application ID used to tie a deployment back to the Application Inventory"
-    type = "string"
-}
-
 variable "resource_group_name" {
     description = "The Resource Group in which these vms will be provisioned"
     type = "string"
 }
 
-variable "role" {
-    description = "What is the functional role of this server in the context of the application (e.g. Web Server)"
-    type = "string"
-}
 
 variable location {
     description = "Which azure location will these virtual machines be deployed?"

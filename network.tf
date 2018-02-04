@@ -46,7 +46,7 @@ resource "azurerm_public_ip" "vm_pi" {
 #########################################
 resource "azurerm_lb" "test" {
   count               = "${var.lb_enabled ? 1 : 0 }"
-  name                = "${var.app_id}-LoadBalancer"
+  name                = "${element(random_pet.vm_name.*.id, 0)}-LoadBalancer"
   location            = "${var.location}"
   resource_group_name     = "${var.resource_group_name}"
   tags = "${var.tags}"
@@ -67,8 +67,8 @@ resource "azurerm_public_ip" "lb_pi" {
 
   # Public IP Information
   count                        = "${var.lb_public ? 1 : 0 }"
-  name                         = "${var.app_id}-loadbalancer-pip"
-  domain_name_label            = "${var.app_id}-loadbalancer-pip"
+  name                         = "${element(random_pet.vm_name.*.id, 0)}-loadbalancer-pip"
+  domain_name_label            = "${element(random_pet.vm_name.*.id, 0)}-loadbalancer-pip"
   public_ip_address_allocation = "dynamic"
   tags = "${var.tags}"
 }
